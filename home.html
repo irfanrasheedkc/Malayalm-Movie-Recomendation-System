@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommendation</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+        }
+        .input-field {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .results {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Movie Recommendation</h1>
+        <input type="text" id="movieName" class="input-field" placeholder="Enter a movie name">
+        <button class="button" onclick="getRecommendations()">Get Recommendations</button>
+        <div class="results" id="results"></div>
+    </div>
+    <script>
+        async function getRecommendations() {
+            const movieName = document.getElementById('movieName').value;
+            const response = await fetch(`http://127.0.0.1:8000/recommend/?movie_name=${movieName}`);
+            const recommendations = await response.json();
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            
+            recommendations.forEach((recommendation, index) => {
+                const recommendationText = `${index + 1}. ${recommendation.Title} (Similarity Score: ${recommendation.Similarity_Score.toFixed(2)})`;
+                const recommendationElement = document.createElement('p');
+                recommendationElement.textContent = recommendationText;
+                resultsDiv.appendChild(recommendationElement);
+            });
+        }
+    </script>
+</body>
+</html>
