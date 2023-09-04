@@ -19,14 +19,14 @@ app.add_middleware(
 )
 
 # Load the similarity matrix from the file
-similarity = np.load('similarity.npy')
+similarity = np.load('Saved Files\similarity.npy',allow_pickle=True)
 
 # Loading the list of movie titles from the file
-list_of_all_titles = np.load('list_of_all_titles.npy')
+list_of_all_titles = np.load('Saved Files\list_of_all_titles.npy',allow_pickle=True)
 
 # Load the index_to_title_mapping from the file
 index_to_title_mapping = np.load(
-    'index_to_title_mapping.npy', allow_pickle=True).item()
+    'Saved Files\index_to_title_mapping.npy', allow_pickle=True).item()
 
 # Create a DataFrame from the dictionary
 movies_data = pd.DataFrame.from_dict(
